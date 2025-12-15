@@ -42,19 +42,19 @@
               {{ end }}
             {{ end }}
             
-            {{/* Method 4: Current URL contains menu name (lowercase) - for /categories/essays/ etc */}}
+            {{/* Method 4: Current URL contains menu name - for /categories/essays/ etc */}}
             {{ if not $isActive }}
               {{ $lowerMenuName := $menuName | lower }}
               {{ $lowerURL := $currentURL | lower }}
-              {{ if strings.Contains $lowerURL $lowerMenuName }}
+              {{ if in $lowerURL $lowerMenuName }}
                 {{ $isActive = true }}
               {{ end }}
             {{ end }}
             
-            {{/* Method 5: Check Section */}}
+            {{/* Method 5: Check if URL contains /categories/menuname/ pattern */}}
             {{ if not $isActive }}
-              {{ $lowerMenuName := $menuName | lower }}
-              {{ if eq ($.Page.Section | lower) $lowerMenuName }}
+              {{ $categoryPath := printf "/categories/%s/" ($menuName | lower) }}
+              {{ if in $currentURL $categoryPath }}
                 {{ $isActive = true }}
               {{ end }}
             {{ end }}
