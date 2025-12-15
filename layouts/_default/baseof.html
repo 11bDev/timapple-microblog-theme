@@ -8,5 +8,9 @@
         </div>
         {{ partial "footer.html" . }}
         {{ partial "custom_footer.html" . }}
+        {{/* Plugin JavaScript support */}}
+        {{ range .Site.Params.plugins_js }}
+          <script src="{{ . }}"></script>
+        {{ end }}
     </body>
 </html>

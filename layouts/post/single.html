@@ -41,12 +41,17 @@
 
   </article>
 
+  {{/* Plugin support - Reply by Email, Reply Count, etc. */}}
+  <div class="post-interactions" style="max-width: 650px; margin: 0 auto; padding: 1rem 0;">
+    {{ range $filename := .Site.Params.plugins_html }}
+      {{ partial $filename $ }}
+    {{ end }}
+  </div>
+
   {{/* Micro.blog Conversations (Comments/Replies) */}}
-  {{ if .Site.Params.include_conversation }}
   <div id="conversation" class="microblog_conversation" style="max-width: 650px; margin: 0 auto;">
     <script type="text/javascript" src="https://micro.blog/conversation.js?url={{ .Permalink }}"></script>
   </div>
-  {{ end }}
 
 </main>
 {{ end }}
