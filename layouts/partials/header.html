@@ -16,35 +16,45 @@
         {{/* Dynamic pages from Micro.blog settings - sorted by Weight */}}
         {{ range sort .Site.Menus.main "Weight" }}
           <li>
-            {{/* Multiple checks for active state */}}
+            {{/* Detect active state using multiple methods */}}
+            {{ $menuName := .Name }}
             {{ $menuURL := .URL }}
             {{ $currentURL := $.Page.RelPermalink }}
+            {{ $pageTitle := $.Page.Title }}
             {{ $isActive := false }}
             
-            {{/* Direct URL match */}}
+            {{/* Method 1: Direct URL match */}}
             {{ if eq $currentURL $menuURL }}
               {{ $isActive = true }}
             {{ end }}
             
-            {{/* Check if current URL starts with menu URL (for nested pages) */}}
+            {{/* Method 2: URL starts with menu URL */}}
             {{ if not $isActive }}
               {{ if and (gt (len $menuURL) 1) (hasPrefix $currentURL $menuURL) }}
                 {{ $isActive = true }}
               {{ end }}
             {{ end }}
             
-            {{/* Check if we're viewing this menu item's page */}}
+            {{/* Method 3: Page title matches menu name exactly */}}
             {{ if not $isActive }}
-              {{ with .Page }}
-                {{ if eq $.Page .Page }}
-                  {{ $isActive = true }}
-                {{ end }}
+              {{ if eq $pageTitle $menuName }}
+                {{ $isActive = true }}
               {{ end }}
             {{ end }}
             
-            {{/* For category pages - check if page title matches menu name */}}
+            {{/* Method 4: Current URL contains menu name (lowercase) - for /categories/essays/ etc */}}
             {{ if not $isActive }}
-              {{ if eq $.Page.Title .Name }}
+              {{ $lowerMenuName := $menuName | lower }}
+              {{ $lowerURL := $currentURL | lower }}
+              {{ if strings.Contains $lowerURL $lowerMenuName }}
+                {{ $isActive = true }}
+              {{ end }}
+            {{ end }}
+            
+            {{/* Method 5: Check Section */}}
+            {{ if not $isActive }}
+              {{ $lowerMenuName := $menuName | lower }}
+              {{ if eq ($.Page.Section | lower) $lowerMenuName }}
                 {{ $isActive = true }}
               {{ end }}
             {{ end }}
