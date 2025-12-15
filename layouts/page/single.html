@@ -1,0 +1,28 @@
+{{ define "main" }}
+<main class="container" style="max-width: 720px; margin: 0 auto; padding: 0 1.5rem;">
+  <article class="article h-entry page-content" style="max-width: 650px; margin: 0 auto; padding: 2rem 0 3rem;">
+    
+    {{/* Page Description - no title header */}}
+    {{ with .Description }}
+      <header class="page-header" style="text-align: center; margin-bottom: 2rem;">
+        <p class="page-description" style="font-style: italic; color: var(--color-ink-light);">{{ . }}</p>
+      </header>
+    {{ end }}
+
+    {{/* Page Content */}}
+    <div class="article-content e-content" style="font-size: 1.125rem; line-height: 1.8;">
+      {{ .Content }}
+    </div>
+
+    {{/* Hidden Author Info for Microformats */}}
+    <div class="p-author h-card" style="display:none;">
+      <span class="p-name">{{ .Site.Author.name }}</span>
+      {{ with .Site.Author.avatar }}
+        <img class="u-photo" src="{{ . }}" alt="">
+      {{ end }}
+      <a class="u-url" href="{{ .Site.BaseURL }}">{{ .Site.BaseURL }}</a>
+    </div>
+
+  </article>
+</main>
+{{ end }}
