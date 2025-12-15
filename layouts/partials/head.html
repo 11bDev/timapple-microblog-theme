@@ -3,6 +3,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   
+  {{/* Critical styles to prevent flash */}}
+  <style>html,body{background-color:#f5f1e8;}</style>
+  
   <title>{{ if not .IsHome }}{{ .Title }} · {{ end }}{{ .Site.Title }}</title>
   
   {{/* Meta Description */}}
@@ -53,7 +56,7 @@
   --transition-normal: 0.3s ease;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 18px; scroll-behavior: smooth; }
+html { font-size: 18px; scroll-behavior: smooth; background-color: var(--color-parchment); }
 body {
   font-family: var(--font-body);
   font-size: 1rem;
@@ -63,6 +66,11 @@ body {
   background-image: linear-gradient(to bottom, var(--color-parchment-light) 0%, var(--color-parchment) 100%);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  opacity: 0;
+  animation: fadeIn 0.2s ease-in forwards;
+}
+@keyframes fadeIn {
+  to { opacity: 1; }
 }
 body::before {
   content: '';
