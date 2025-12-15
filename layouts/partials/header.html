@@ -19,7 +19,7 @@
         <li><a href="{{ "categories/essays/" | relURL }}" {{ if eq .Title "Essays" }}class="active"{{ end }}>Essays</a></li>
         <li><a href="{{ "categories/notes/" | relURL }}" {{ if eq .Title "Notes" }}class="active"{{ end }}>Notes</a></li>
         <li><a href="{{ "archive/" | relURL }}" {{ if eq .Title "Archive" }}class="active"{{ end }}>Archive</a></li>
-        {{ if .Site.Params.show_photos }}<li><a href="{{ "photos/" | relURL }}" {{ if eq .Title "Photos" }}class="active"{{ end }}>Photos</a></li>{{ end }}
+        <li><a href="{{ "photos/" | relURL }}" {{ if eq .Title "Photos" }}class="active"{{ end }}>Photos</a></li>
         <li><a href="https://micro.blog/{{ .Site.Author.username }}">Follow</a></li>
       </ul>
     </nav>
