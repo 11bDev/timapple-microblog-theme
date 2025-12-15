@@ -1,0 +1,25 @@
+{{ define "main" }}
+<main class="container container-wide">
+
+  {{/* Page Header */}}
+  <header class="page-header">
+    <h1 class="page-title">Photos</h1>
+    <p class="page-description">A visual journal</p>
+  </header>
+
+  {{/* Photos Grid */}}
+  <section class="photos-page">
+    <div class="photos-grid">
+      {{- $list := where .Site.Pages ".Params.photos" "!=" nil -}}
+      {{ range $list }}
+        <a href="{{ .Permalink }}" class="photo-item">
+          {{ range first 1 .Params.photos }}
+            <img src="{{ . }}" alt="" loading="lazy" />
+          {{ end }}
+        </a>
+      {{ end }}
+    </div>
+  </section>
+
+</main>
+{{ end }}

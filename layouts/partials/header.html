@@ -1,0 +1,28 @@
+<header class="site-header">
+  <div class="container">
+    
+    {{/* Site Masthead */}}
+    <div class="site-masthead">
+      <h1 class="site-title">
+        <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
+      </h1>
+      {{ with .Site.Params.description }}
+        <p class="site-subtitle">{{ . | safeHTML }}</p>
+      {{ end }}
+      <p class="date-banner">{{ now.Format "Monday, January 2, 2006" }}</p>
+    </div>
+
+    {{/* Main Navigation */}}
+    <nav class="site-nav" role="navigation" aria-label="Main navigation">
+      <ul>
+        <li><a href="{{ .Site.BaseURL }}" {{ if .IsHome }}class="active"{{ end }}>Home</a></li>
+        <li><a href="{{ "categories/essays/" | relURL }}" {{ if eq .Title "Essays" }}class="active"{{ end }}>Essays</a></li>
+        <li><a href="{{ "categories/notes/" | relURL }}" {{ if eq .Title "Notes" }}class="active"{{ end }}>Notes</a></li>
+        <li><a href="{{ "archive/" | relURL }}" {{ if eq .Title "Archive" }}class="active"{{ end }}>Archive</a></li>
+        <li><a href="{{ "photos/" | relURL }}" {{ if eq .Title "Photos" }}class="active"{{ end }}>Photos</a></li>
+        <li><a href="https://micro.blog/{{ .Site.Author.username }}">Follow</a></li>
+      </ul>
+    </nav>
+
+  </div>
+</header>

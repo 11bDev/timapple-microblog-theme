@@ -1,0 +1,46 @@
+{{ define "main" }}
+<main class="container">
+
+  {{/* Page Header */}}
+  <header class="page-header">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{ with .Description }}
+      <p class="page-description">{{ . }}</p>
+    {{ end }}
+  </header>
+
+  {{/* Posts List */}}
+  <div class="h-feed">
+    <section class="archive-page">
+      <ul class="archive-list">
+        {{ range .Pages }}
+          <li class="archive-item h-entry">
+            <span class="archive-date">
+              <time class="dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+                {{ .Date.Format "Jan 2, 2006" }}
+              </time>
+            </span>
+            <span class="archive-title p-name">
+              <a href="{{ .Permalink }}" class="u-url">{{ if .Title }}{{ .Title }}{{ else }}{{ .Summary | truncate 60 }}{{ end }}</a>
+            </span>
+            <span class="p-author h-card" style="display:none;">{{ .Site.Author.name }}</span>
+          </li>
+        {{ end }}
+      </ul>
+    </section>
+  </div>
+
+  {{/* Pagination */}}
+  {{ if or .Paginator.HasPrev .Paginator.HasNext }}
+    <nav class="pagination" aria-label="Pagination">
+      {{ if .Paginator.HasPrev }}
+        <a href="{{ .Paginator.Prev.URL }}" rel="prev">← Newer</a>
+      {{ end }}
+      {{ if .Paginator.HasNext }}
+        <a href="{{ .Paginator.Next.URL }}" rel="next">Older →</a>
+      {{ end }}
+    </nav>
+  {{ end }}
+
+</main>
+{{ end }}

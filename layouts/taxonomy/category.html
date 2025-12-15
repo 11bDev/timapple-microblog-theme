@@ -1,0 +1,98 @@
+{{ define "main" }}
+<main class="container">
+
+  {{/* Page Header */}}
+  <header class="page-header">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{ if eq .Title "Essays" }}
+      <p class="page-description">Long-form thoughts and reflections</p>
+    {{ else if eq .Title "Notes" }}
+      <p class="page-description">Quick observations and everyday musings</p>
+    {{ else }}
+      <p class="page-description">Posts in this category</p>
+    {{ end }}
+  </header>
+
+  {{/* Posts List */}}
+  <div class="h-feed">
+    {{ if eq .Title "Essays" }}
+      {{/* Essays Layout - For titled posts */}}
+      <section class="essays-page">
+        <ul class="essays-list">
+          {{ range .Pages }}
+            <li class="essay-item h-entry">
+              <h2 class="essay-title p-name">
+                <a href="{{ .Permalink }}" class="u-url">{{ if .Title }}{{ .Title }}{{ else }}Untitled{{ end }}</a>
+              </h2>
+              <div class="essay-meta">
+                <time class="dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+                  {{ .Date.Format "January 2, 2006" }}
+                </time>
+              </div>
+              {{ if .Summary }}
+                <p class="essay-excerpt p-summary">{{ .Summary | truncate 250 }}</p>
+              {{ end }}
+              <span class="p-author h-card" style="display:none;">{{ .Site.Author.name }}</span>
+            </li>
+          {{ end }}
+        </ul>
+      </section>
+
+    {{ else if eq .Title "Notes" }}
+      {{/* Notes Layout - For short/untitled posts */}}
+      <section class="notes-page">
+        <ul class="notes-list">
+          {{ range .Pages }}
+            <li class="note-item h-entry">
+              <div class="note-content e-content">
+                {{ .Content }}
+              </div>
+              <div class="note-meta">
+                <a href="{{ .Permalink }}" class="u-url">
+                  <time class="dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+                    {{ .Date.Format "January 2, 2006 · 3:04 PM" }}
+                  </time>
+                </a>
+              </div>
+              <span class="p-author h-card" style="display:none;">{{ .Site.Author.name }}</span>
+            </li>
+          {{ end }}
+        </ul>
+      </section>
+
+    {{ else }}
+      {{/* Default Category Layout */}}
+      <section class="archive-page">
+        <ul class="archive-list">
+          {{ range .Pages }}
+            <li class="archive-item h-entry">
+              <span class="archive-date">
+                <time class="dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+                  {{ .Date.Format "Jan 2, 2006" }}
+                </time>
+              </span>
+              <span class="archive-title p-name">
+                <a href="{{ .Permalink }}" class="u-url">{{ if .Title }}{{ .Title }}{{ else }}{{ .Summary | truncate 60 }}{{ end }}</a>
+              </span>
+              <span class="p-author h-card" style="display:none;">{{ .Site.Author.name }}</span>
+            </li>
+          {{ end }}
+        </ul>
+      </section>
+    {{ end }}
+  </div>
+
+  {{/* Pagination */}}
+  {{ if or .Paginator.HasPrev .Paginator.HasNext }}
+    <nav class="pagination" aria-label="Pagination">
+      {{ if .Paginator.HasPrev }}
+        <a href="{{ .Paginator.Prev.URL }}" rel="prev">← Newer</a>
+      {{ end }}
+      {{ if .Paginator.HasNext }}
+        <a href="{{ .Paginator.Next.URL }}" rel="next">Older →</a>
+      {{ end }}
+    </nav>
+  {{ end }}
+
+</main>
+{{ end }}

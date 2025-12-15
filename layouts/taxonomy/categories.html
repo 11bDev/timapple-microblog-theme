@@ -1,0 +1,23 @@
+{{ define "main" }}
+<main class="container">
+
+  {{/* Page Header */}}
+  <header class="page-header">
+    <h1 class="page-title">Categories</h1>
+    <p class="page-description">Browse posts by category</p>
+  </header>
+
+  {{/* Categories List */}}
+  <section class="archive-categories">
+    <ul>
+      {{ range .Pages }}
+        <li>
+          <a href="{{ .Permalink }}">{{ .Title }}</a>
+          <span class="count">({{ len .Pages }})</span>
+        </li>
+      {{ end }}
+    </ul>
+  </section>
+
+</main>
+{{ end }}

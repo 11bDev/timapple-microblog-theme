@@ -1,0 +1,70 @@
+{{ define "main" }}
+<main class="container landing-page">
+  
+  {{/* Hero Section */}}
+  <section class="landing-hero">
+    <p class="landing-intro">A place for thoughts, reflections, and observations.</p>
+  </section>
+
+  {{/* Section Cards */}}
+  <section class="landing-sections">
+    
+    {{/* Essays Card */}}
+    <a href="{{ "categories/essays/" | relURL }}" class="section-card">
+      <h2>Essays</h2>
+      <p>Long-form thoughts and reflections on topics that matter. Take your time, pour a cup of tea.</p>
+      <span class="read-more">Read Essays →</span>
+    </a>
+    
+    {{/* Notes Card */}}
+    <a href="{{ "categories/notes/" | relURL }}" class="section-card">
+      <h2>Notes</h2>
+      <p>Quick observations, fleeting thoughts, and everyday musings. Brief but no less meaningful.</p>
+      <span class="read-more">Browse Notes →</span>
+    </a>
+    
+  </section>
+
+  {{/* Latest Posts Preview */}}
+  <section class="latest-preview">
+    <h2>Recently Published</h2>
+    
+    <div class="h-feed">
+      {{ $posts := where .Site.RegularPages "Type" "post" }}
+      {{ range first 5 $posts }}
+        <article class="h-entry {{ if .Title }}essay-item{{ else }}note-item{{ end }}">
+          {{ if .Title }}
+            {{/* This is an Essay (has title) */}}
+            <h3 class="essay-title p-name">
+              <a href="{{ .Permalink }}" class="u-url">{{ .Title }}</a>
+            </h3>
+            <div class="essay-meta">
+              <time class="dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+                {{ .Date.Format "January 2, 2006" }}
+              </time>
+            </div>
+            {{ if .Summary }}
+              <p class="essay-excerpt p-summary">{{ .Summary | truncate 200 }}</p>
+            {{ end }}
+          {{ else }}
+            {{/* This is a Note (no title) */}}
+            <div class="note-content e-content">
+              {{ .Summary | truncate 280 | safeHTML }}
+            </div>
+            <div class="note-meta">
+              <a href="{{ .Permalink }}" class="u-url">
+                <time class="dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+                  {{ .Date.Format "January 2, 2006 · 3:04 PM" }}
+                </time>
+              </a>
+            </div>
+          {{ end }}
+          <span class="p-author h-card" style="display:none;">{{ .Site.Author.name }}</span>
+        </article>
+      {{ end }}
+    </div>
+    
+  </section>
+
+</main>
+{{ end }}
