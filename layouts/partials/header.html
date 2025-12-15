@@ -12,14 +12,18 @@
       <p class="date-banner">{{ now.Format "Monday, January 2, 2006" }}</p>
     </div>
 
-    {{/* Main Navigation */}}
+    {{/* Main Navigation - Uses Micro.blog's page management */}}
     <nav class="site-nav" role="navigation" aria-label="Main navigation">
       <ul>
         <li><a href="{{ .Site.BaseURL }}" {{ if .IsHome }}class="active"{{ end }}>Home</a></li>
-        <li><a href="{{ "categories/essays/" | relURL }}" {{ if eq .Title "Essays" }}class="active"{{ end }}>Essays</a></li>
-        <li><a href="{{ "categories/notes/" | relURL }}" {{ if eq .Title "Notes" }}class="active"{{ end }}>Notes</a></li>
-        <li><a href="{{ "archive/" | relURL }}" {{ if eq .Title "Archive" }}class="active"{{ end }}>Archive</a></li>
-        <li><a href="{{ "photos/" | relURL }}" {{ if eq .Title "Photos" }}class="active"{{ end }}>Photos</a></li>
+        {{/* Dynamic pages from Micro.blog settings */}}
+        {{ range .Site.Menus.main }}
+          {{ if .Page.Params.redirect }}
+            <a href="{{ .Page.Params.redirect }}">{{ .Name }}</a>
+          {{ else }}
+            <li><a href="{{ .URL | relLangURL | safeURL }}">{{ .Name }}</a></li>
+          {{ end }}
+        {{ end }}
         <li><a href="https://micro.blog/{{ .Site.Author.username }}">Follow</a></li>
       </ul>
     </nav>

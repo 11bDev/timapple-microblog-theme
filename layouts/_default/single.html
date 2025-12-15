@@ -1,9 +1,9 @@
 {{ define "main" }}
-<main class="container">
-  <article class="article h-entry">
+<main class="container" style="max-width: 720px; margin: 0 auto; padding: 0 1.5rem;">
+  <article class="article h-entry" style="max-width: 650px; margin: 0 auto; padding: 2rem 0 3rem;">
     
     {{/* Article Header */}}
-    <header class="article-header">
+    <header class="article-header" style="text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #d4c9b5;">
       {{ if .Title }}
         <h1 class="article-title p-name">{{ .Title }}</h1>
       {{ end }}
@@ -24,7 +24,7 @@
     </header>
 
     {{/* Article Content */}}
-    <div class="article-content e-content {{ if .Title }}essay{{ end }}">
+    <div class="article-content e-content {{ if .Title }}essay{{ end }}" style="font-size: 1.125rem; line-height: 1.8;">
       {{ .Content }}
     </div>
 
