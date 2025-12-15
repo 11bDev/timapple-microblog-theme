@@ -2,14 +2,14 @@
   <div class="container">
     
     {{/* Site Masthead */}}
-    <div class="site-masthead">
+    <div class="site-masthead" style="text-align: center;">
       <h1 class="site-title">
         <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
       </h1>
-      {{ with .Site.Params.description }}
-        <p class="site-subtitle">{{ . | safeHTML }}</p>
-      {{ end }}
-      <p class="date-banner">{{ now.Format "Monday, January 2, 2006" }}</p>
+      <p class="site-follow" style="font-style: italic; margin-bottom: 0.5rem;">
+        Follow <a href="https://micro.blog/{{ .Site.Author.username }}">@{{ .Site.Author.username }}</a> on Micro.blog
+      </p>
+      <p class="date-banner" style="text-align: center;">{{ now.Format "Monday, January 2, 2006" }}</p>
     </div>
 
     {{/* Main Navigation - Uses Micro.blog's page management */}}
@@ -26,7 +26,6 @@
             {{ end }}
           </li>
         {{ end }}
-        <li><a href="https://micro.blog/{{ .Site.Author.username }}">Follow</a></li>
       </ul>
     </nav>
 
