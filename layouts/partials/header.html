@@ -9,6 +9,13 @@
       <p class="date-banner" style="text-align: center;">{{ now.Format "Monday, January 2, 2006" }}</p>
     </div>
 
+    {{/* Mobile Menu Toggle */}}
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+
     {{/* Main Navigation - Uses Micro.blog's page management */}}
     <nav class="site-nav" role="navigation" aria-label="Main navigation">
       <ul>
@@ -71,3 +78,29 @@
 
   </div>
 </header>
+
+{{/* Mobile Menu JavaScript */}}
+<script>
+(function() {
+  const menuToggle = document.querySelector('.menu-toggle');
+  const siteNav = document.querySelector('.site-nav');
+  
+  if (menuToggle && siteNav) {
+    menuToggle.addEventListener('click', function() {
+      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', !isExpanded);
+      menuToggle.classList.toggle('is-active');
+      siteNav.classList.toggle('is-open');
+    });
+    
+    // Close menu when clicking on a link
+    siteNav.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.classList.remove('is-active');
+        siteNav.classList.remove('is-open');
+      });
+    });
+  }
+})();
+</script>
